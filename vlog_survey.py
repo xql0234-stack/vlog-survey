@@ -34,9 +34,7 @@ st.markdown("""
 再次感謝您的協助！
 """)
 
-st.write("---")  # 分隔線
-
-st.write("請根據您的想法回答以下題目，1 表示『非常不同意』，7 表示『非常同意』。")
+st.write("---")
 
 # -----------------------------
 # 第一部分：基本資料
@@ -64,7 +62,7 @@ income = st.selectbox("8. 您的每月可支配所得：", [
 ])
 
 # -----------------------------
-# 第二部分：生活型態
+# 第二部分：生活型態測驗
 # -----------------------------
 st.header("第二部分：生活型態")
 
@@ -95,7 +93,6 @@ questions = {
     ]
 }
 
-# 自動加上題號（改為 1～7量表）
 responses = {}
 question_num = 1
 for category, qs in questions.items():
@@ -105,60 +102,106 @@ for category, qs in questions.items():
         question_num += 1
 
 # -----------------------------
-# 影片連結
+# 影片連結設定
 # -----------------------------
 videos = {
-    "探索冒險型": "https://www.youtube.com/watch?v=rn3vkZf1NEw&list=PLaTgGdKCl5EgUqoegkfpAAqW0U3VtIaor&index=4",
-    "社交分享型": "https://www.youtube.com/watch?v=H_OVtdOKu8g&list=PLaTgGdKCl5EgUqoegkfpAAqW0U3VtIaor&index=2",
-    "休閒放鬆型": "https://www.youtube.com/watch?v=xb8Va3qr62k&list=PLaTgGdKCl5EgUqoegkfpAAqW0U3VtIaor&index=5",
-    "理性規劃型": "https://www.youtube.com/watch?v=LpFSGtGw4X8&list=PLaTgGdKCl5EgUqoegkfpAAqW0U3VtIaor"
+    "探索冒險型": "https://www.youtube.com/watch?v=rn3vkZf1NEw",
+    "社交分享型": "https://www.youtube.com/watch?v=H_OVtdOKu8g",
+    "休閒放鬆型": "https://www.youtube.com/watch?v=oMnOt9v3YSw",
+    "理性規劃型": "https://www.youtube.com/watch?v=LpFSGtGw4X8"
 }
+
+# -----------------------------
+# 第三部分：影片評價題項
+# -----------------------------
+video_questions = [
+    "旅遊Vlog中的畫面呈現與拍攝手法提升了我對旅遊地點的臨場感。",
+    "旅遊Vlog的剪輯方式讓我覺得流暢自然。",
+    "旅遊Vlog的配樂或旁白增添了觀賞體驗。",
+    "我偏好畫質高、攝影技術佳的旅遊Vlog。",
+    "旅遊Vlog提供的旅遊資訊（行程、交通、住宿、預算等）對我很有幫助。",
+    "影片提供的資訊、實務建議比旅遊書或一般官方資訊更貼近實際情況。",
+    "我認為這支旅遊Vlog能幫助我降低旅遊規劃的不確定性。",
+    "我能從這支旅遊Vlog中獲得旅程規劃的靈感。",
+    "影片的節奏與情緒鋪陳能吸引我持續觀看。",
+    "創作者在影片中的表達方式（如口語敘述、旁白或情感分享）能讓我投入其中。",
+    "影片中創作者的旅程經歷與心境變化，讓我感到共鳴。",
+    "觀看完此影片能讓我感到愉快、放鬆。",
+    "我會建議朋友觀看這支影片，因為它有娛樂價值。",
+    "影片中的趣味設計能讓我持續想看下去。"
+]
+
+youtuber_questions = [
+    "我可以信任這位YouTuber所提供的旅遊資訊。",
+    "我覺得這位YouTuber是誠實的。",
+    "我覺得這位YouTuber的形象是正面的。",
+    "我認為這位YouTuber對旅遊相關知識很熟悉。",
+    "我覺得這位YouTuber提供的內容準備充足、查證充分。",
+    "這位YouTuber提供的建議具專業判斷或經驗累積。",
+    "我認為這位YouTuber的外型是具有吸引力的。",
+    "我覺得這位YouTuber具有個人特色、風格鮮明。",
+    "如果這位YouTuber出現在其他人的頻道上,我會看那個影片。",
+    "我認為可以透過旅遊Vlog了解這位YouTuber。",
+    "這位YouTuber經常提到過去的生活史。",
+    "這位YouTuber不會隱藏自己的相關資訊(如感情、年齡等)。",
+    "這位YouTuber常常分享個人嗜好。",
+    "若這位YouTuber推出新旅遊影片，我願意持續追看。"
+]
 
 # -----------------------------
 # 提交與結果計算
 # -----------------------------
-if st.button("提交問卷"):
+if st.button("提交生活型態測驗"):
     category_scores = {cat: sum(responses[q] for q in qs) for cat, qs in questions.items()}
     lifestyle = max(category_scores, key=category_scores.get)
-
-    st.success(f"你的生活型態為：**{lifestyle}** 🎉")
-
     matched_video = videos[lifestyle]
     other_videos = [v for k, v in videos.items() if k != lifestyle]
     random_video = random.choice(other_videos)
 
-    st.write("📺 以下是為你推薦的兩支影片：")
-    st.markdown(f"**配對影片（{lifestyle}）**")
+    st.success(f"你的生活型態為：**{lifestyle}** 🎉")
+
+    st.markdown("### 📺 配對影片")
     st.video(matched_video)
-    st.markdown("**隨機影片**")
+    st.write("請觀看影片後回答以下題目：")
+
+    matched_scores = {}
+    for i, q in enumerate(video_questions + youtuber_questions, start=10):
+        matched_scores[f"影片1_Q{i}"] = st.slider(f"{i}. {q}", 1, 7, 4, key=f"mv1_{i}")
+
+    st.markdown("---")
+    st.markdown("### 🎬 隨機影片")
     st.video(random_video)
+    st.write("請觀看影片後回答以下題目：")
 
-    # 儲存結果
-    data = {
-        "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        "觀看旅遊Vlog": watch_vlog,
-        "觀看頻率": watch_freq,
-        "觀看時間": watch_time,
-        "性別": gender,
-        "年齡": age_group,
-        "教育程度": edu,
-        "職業": job,
-        "月可支配所得": income,
-        "生活型態": lifestyle,
-        "score_探索冒險型": category_scores["探索冒險型"],
-        "score_社交分享型": category_scores["社交分享型"],
-        "score_休閒放鬆型": category_scores["休閒放鬆型"],
-        "score_理性規劃型": category_scores["理性規劃型"],
-        "matched_video": matched_video,
-        "random_video": random_video
-    }
+    random_scores = {}
+    for i, q in enumerate(video_questions + youtuber_questions, start=10):
+        random_scores[f"影片2_Q{i}"] = st.slider(f"{i}. {q}", 1, 7, 4, key=f"mv2_{i}")
 
-    df = pd.DataFrame([data])
-    file_path = "responses.csv"
-    if not os.path.exists(file_path):
-        df.to_csv(file_path, index=False, encoding="utf-8-sig")
-    else:
-        df.to_csv(file_path, mode="a", header=False, index=False, encoding="utf-8-sig")
+    if st.button("提交整份問卷"):
+        data = {
+            "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "觀看旅遊Vlog": watch_vlog,
+            "觀看頻率": watch_freq,
+            "觀看時間": watch_time,
+            "性別": gender,
+            "年齡": age_group,
+            "教育程度": edu,
+            "職業": job,
+            "月可支配所得": income,
+            "生活型態": lifestyle,
+            **category_scores,
+            "matched_video": matched_video,
+            "random_video": random_video,
+            **matched_scores,
+            **random_scores
+        }
 
-    st.info("✅ 問卷結果已記錄，感謝您的參與！")
+        df = pd.DataFrame([data])
+        file_path = "responses.csv"
+        if not os.path.exists(file_path):
+            df.to_csv(file_path, index=False, encoding="utf-8-sig")
+        else:
+            df.to_csv(file_path, mode="a", header=False, index=False, encoding="utf-8-sig")
+
+        st.success("✅ 問卷結果已記錄，感謝您的參與！")
 
