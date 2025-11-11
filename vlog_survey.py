@@ -3,6 +3,8 @@ import pandas as pd
 import random
 from datetime import datetime
 import os
+import gspread
+from google.oauth2.service_account import Credentials
 
 # -----------------------------
 # 頁面設定
@@ -191,13 +193,48 @@ if st.button("提交生活型態測驗"):
             **random_scores
         }
 
-        df = pd.DataFrame([data])
-        file_path = "responses.csv"
-        if not os.path.exists(file_path):
-            df.to_csv(file_path, index=False, encoding="utf-8-sig")
-        else:
-            df.to_csv(file_path, mode="a", header=False, index=False, encoding="utf-8-sig")
+# -----------------------------
+# 將資料寫入 Google 試算表
+# -----------------------------
+import gspread
+from google.oauth2.service_account import Credentials
 
-        st.success("✅ 問卷結果已記錄，感謝您的參與！")
+# 定義 Google Sheets 權限範圍
+scope = ["https://spreadsheets.google.com/feeds",
+         "https://www.googleapis.com/auth/drive"]
 
+# 從 Streamlit Secrets 載入憑證
+creds = Credentials.from_service_account_info(
+    st.secrets["gcp_service_account"],
+    scopes=scope
+)
+
+client = gspread.authorize(creds)
+
+# 用你的試算表 ID 連線（請改成你自己的）
+sheet = client.open_by_key("1njEcj_--KhiQffroDRrRsQT04hADYrK2Je-emcx-zPY").sheet1
+
+# 將資料轉成列表形式
+data_list = [
+    datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+    watch_vlog,
+    watch_freq,
+    watch_time,
+    gender,
+    age_group,
+    edu,
+    job,
+    income,
+    lifestyle,
+    *category_scores.values(),
+    matched_video,
+    random_video,
+    *matched_scores.values(),
+    *random_scores.values()
+]
+
+# 寫入試算表一列
+sheet.append_row(data_list, value_input_option="USER_ENTERED")
+
+st.success("✅ 問卷結果已成功儲存到 Google 試算表！感謝您的協助 🙏")
 
