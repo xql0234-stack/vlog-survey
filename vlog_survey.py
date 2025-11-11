@@ -107,7 +107,7 @@ for category, qs in questions.items():
 videos = {
     "探索冒險型": "https://www.youtube.com/watch?v=rn3vkZf1NEw",
     "社交分享型": "https://www.youtube.com/watch?v=H_OVtdOKu8g",
-    "休閒放鬆型": "https://www.youtube.com/watch?v=oMnOt9v3YSw",
+    "休閒放鬆型": "https://www.youtube.com/watch?v=xb8Va3qr62k",
     "理性規劃型": "https://www.youtube.com/watch?v=LpFSGtGw4X8"
 }
 
@@ -199,4 +199,5 @@ if st.button("提交生活型態測驗"):
             df.to_csv(file_path, mode="a", header=False, index=False, encoding="utf-8-sig")
 
         st.success("✅ 問卷結果已記錄，感謝您的參與！")
+
 
