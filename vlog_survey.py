@@ -160,7 +160,12 @@ if st.button("提交生活型態測驗"):
 
     st.success(f"你的生活型態為：**{lifestyle}** 🎉")
 
-    st.markdown("### 📺 配對影片")
+    st.write("---")
+    st.header("第三部分：影片題")
+    st.markdown("請依序觀看下列兩支旅遊Vlog影片，並回答影片相關題項。")
+    
+    # 第一支影片
+    st.markdown("### 📺 第一支影片")
     st.video(matched_video)
     st.write("請觀看影片後回答以下題目：")
 
@@ -169,7 +174,9 @@ if st.button("提交生活型態測驗"):
         matched_scores[f"影片1_Q{i}"] = st.slider(f"{i}. {q}", 1, 7, 4, key=f"mv1_{i}")
 
     st.markdown("---")
-    st.markdown("### 🎬 隨機影片")
+
+    # 第二支影片
+    st.markdown("### 🎬 第二支影片")
     st.video(random_video)
     st.write("請觀看影片後回答以下題目：")
 
@@ -204,4 +211,3 @@ if st.button("提交生活型態測驗"):
             df.to_csv(file_path, mode="a", header=False, index=False, encoding="utf-8-sig")
 
         st.success("✅ 問卷結果已記錄，感謝您的參與！")
-
