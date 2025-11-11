@@ -110,7 +110,7 @@ for category, qs in questions.items():
 videos = {
     "探索冒險型": "https://www.youtube.com/watch?v=rn3vkZf1NEw&list=PLaTgGdKCl5EgUqoegkfpAAqW0U3VtIaor&index=4",
     "社交分享型": "https://www.youtube.com/watch?v=H_OVtdOKu8g&list=PLaTgGdKCl5EgUqoegkfpAAqW0U3VtIaor&index=2",
-    "休閒放鬆型": "https://www.youtube.com/watch?v=oMnOt9v3YSw&list=PLaTgGdKCl5EgUqoegkfpAAqW0U3VtIaor&index=3",
+    "休閒放鬆型": "https://www.youtube.com/watch?v=xb8Va3qr62k&list=PLaTgGdKCl5EgUqoegkfpAAqW0U3VtIaor&index=5",
     "理性規劃型": "https://www.youtube.com/watch?v=LpFSGtGw4X8&list=PLaTgGdKCl5EgUqoegkfpAAqW0U3VtIaor"
 }
 
@@ -161,3 +161,4 @@ if st.button("提交問卷"):
         df.to_csv(file_path, mode="a", header=False, index=False, encoding="utf-8-sig")
 
     st.info("✅ 問卷結果已記錄，感謝您的參與！")
+
