@@ -10,7 +10,7 @@ import os
 st.set_page_config(page_title="旅遊Vlog問卷測驗", layout="centered")
 
 st.title("🎬 旅遊 Vlog 內容風格與生活型態問卷")
-st.write("請根據您的想法回答以下題目，1 表示『非常不同意』，5 表示『非常同意』。")
+st.write("請根據您的想法回答以下題目，1 表示『非常不同意』，7 表示『非常同意』。")
 
 # -----------------------------
 # 第一部分：基本資料
@@ -69,13 +69,13 @@ questions = {
     ]
 }
 
-# 自動加上題號
+# 自動加上題號（改為 1～7量表）
 responses = {}
 question_num = 1
 for category, qs in questions.items():
     for q in qs:
         question_label = f"{question_num}. {q}"
-        responses[q] = st.slider(question_label, 1, 5, 3, key=q)
+        responses[q] = st.slider(question_label, 1, 7, 4, key=q)
         question_num += 1
 
 # -----------------------------
