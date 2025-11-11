@@ -1,4 +1,3 @@
-好，那以下是我的程式碼
 import streamlit as st
 import pandas as pd
 import random
@@ -26,7 +25,7 @@ st.markdown("""
 內容無對錯之分，敬請放心填寫。
 
 填答流程包含生活型態測驗與影片觀賞，
-系統將分配兩支旅遊 Vlog 影片，每支影片觀看完後，請您分別回答相同的一組題目。
+系統將分配兩支旅遊 Vlog 影片，請您觀看後依題項作答即可。
 
 若您對本研究有任何疑問，歡迎與研究者聯繫：  
 中國文化大學新聞學系研究生 **許秋琳**  
@@ -80,11 +79,11 @@ questions = {
         "我參加旅遊活動是為了聯絡鄰居或朋友之間的感情。",
         "我常與朋友討論旅遊 Vlog 的內容，或交換旅遊資訊。"
     ],
-   "休閒放鬆型": [
-    "我認為生活中最重要的是放鬆與享受當下。",
-    "我喜歡悠閒、不緊湊的旅遊方式，例如散步或慢遊。",
-    "我喜歡在假日安排一些輕鬆的活動，例如散步、聽音樂或喝咖啡。",
-    "我看旅遊Vlog多半是為了讓自己放鬆、紓壓。"
+    "休閒放鬆型": [
+        "我平常喜歡和朋友一起到戶外打球、逛街或是到郊外踏青。",
+        "我經常安排兩、三天以上的旅遊。",
+        "旅遊是我最喜歡的休閒活動。",
+        "我看旅遊Vlog多半為了紓壓。"
     ],
     "理性規劃型": [
         "我習慣比較價格、評估性價比後再決定。",
@@ -108,7 +107,7 @@ for category, qs in questions.items():
 videos = {
     "探索冒險型": "https://www.youtube.com/watch?v=rn3vkZf1NEw",
     "社交分享型": "https://www.youtube.com/watch?v=H_OVtdOKu8g",
-    "休閒放鬆型": "https://www.youtube.com/watch?v=xb8Va3qr62k",
+    "休閒放鬆型": "https://www.youtube.com/watch?v=oMnOt9v3YSw",
     "理性規劃型": "https://www.youtube.com/watch?v=LpFSGtGw4X8"
 }
 
@@ -161,10 +160,6 @@ if st.button("提交生活型態測驗"):
 
     st.success(f"你的生活型態為：**{lifestyle}** 🎉")
 
-    st.write("---")
-    st.header("第三部分：影片題")
-    st.markdown("請依序觀看下列兩支旅遊Vlog影片，並回答影片相關題項。")
-    
     # 第一支影片
     st.markdown("### 📺 第一支影片")
     st.video(matched_video)
@@ -212,6 +207,3 @@ if st.button("提交生活型態測驗"):
             df.to_csv(file_path, mode="a", header=False, index=False, encoding="utf-8-sig")
 
         st.success("✅ 問卷結果已記錄，感謝您的參與！")
-
-
-
