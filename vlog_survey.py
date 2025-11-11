@@ -180,30 +180,33 @@ if st.button("提交生活型態測驗"):
     for i, q in enumerate(video_questions + youtuber_questions, start=10):
         random_scores[f"影片2_Q{i}"] = st.slider(f"{i}. {q}", 1, 7, 4, key=f"mv2_{i}")
 
-  if st.button("提交整份問卷"):
-    # 取出先前的暫存資料
-    lifestyle = st.session_state["lifestyle"]
-    category_scores = st.session_state["category_scores"]
-    matched_video = st.session_state["matched_video"]
-    random_video = st.session_state["random_video"]
+    # -----------------------------
+    # 提交整份問卷
+    # -----------------------------
+    if st.button("提交整份問卷"):
+        # 取出 session_state 的變數
+        lifestyle = st.session_state["lifestyle"]
+        category_scores = st.session_state["category_scores"]
+        matched_video = st.session_state["matched_video"]
+        random_video = st.session_state["random_video"]
 
-    data = {
-        "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        "觀看旅遊Vlog": watch_vlog,
-        "觀看頻率": watch_freq,
-        "觀看時間": watch_time,
-        "性別": gender,
-        "年齡": age_group,
-        "教育程度": edu,
-        "職業": job,
-        "月可支配所得": income,
-        "生活型態": lifestyle,
-        **category_scores,
-        "matched_video": matched_video,
-        "random_video": random_video,
-        **matched_scores,
-        **random_scores
-    }
+        data = {
+            "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "觀看旅遊Vlog": watch_vlog,
+            "觀看頻率": watch_freq,
+            "觀看時間": watch_time,
+            "性別": gender,
+            "年齡": age_group,
+            "教育程度": edu,
+            "職業": job,
+            "月可支配所得": income,
+            "生活型態": lifestyle,
+            **category_scores,
+            "matched_video": matched_video,
+            "random_video": random_video,
+            **matched_scores,
+            **random_scores
+        }
 
 # -----------------------------
 # 將資料寫入 Google 試算表
@@ -249,6 +252,7 @@ data_list = [
 sheet.append_row(data_list, value_input_option="USER_ENTERED")
 
 st.success("✅ 問卷結果已成功儲存到 Google 試算表！感謝您的協助 🙏")
+
 
 
 
