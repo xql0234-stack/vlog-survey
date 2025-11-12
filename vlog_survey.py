@@ -11,7 +11,7 @@ from google.oauth2.service_account import Credentials
 # -----------------------------
 st.set_page_config(page_title="旅遊Vlog問卷測驗", layout="centered")
 
-st.title("🎬 旅遊 Vlog 內容風格與生活型態問卷")
+st.title("旅遊 Vlog 內容風格與生活型態問卷")
 
 # -----------------------------
 # 問卷說明
@@ -237,6 +237,7 @@ if "lifestyle" in st.session_state:
 
         sheet.append_row(data_list, value_input_option="USER_ENTERED")
         st.success("✅ 問卷結果已成功儲存到 Google 試算表！感謝您的協助 🙏")
+
 
 
 
